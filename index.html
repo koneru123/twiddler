@@ -3,25 +3,44 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" type="text/css"  href="index.css">
   </head>
   <body>
     <script>
-
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
-
+        $('body').html('<div id="btn"><button type="button">Refresh Tweets</button></div>');
         var index = streams.home.length - 1;
+        var time = new Date();
+        var hours = time.getHours();
+        var mins = time.getMinutes();
+        var secs = time.getSeconds();
+        var timeStamp = hours + ':' + mins + ':' + secs;
+
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.text(timeStamp + ' @' + tweet.user + ': ' + tweet.message);
           $tweet.appendTo($body);
           index -= 1;
+
         }
+
+        /*$('#btn').append($( '<div id="container" class="containerDev"></div>' ));
+        $('#container').append($( '<div id="timeStamp"></div>' ));
+        $('#container').append($( '<div id="userName"></div>' ));
+        $('#container').append($( '<div id="tweetMessage"></div>' ));
+        $('#timeStamp').text(timeStamp);
+        $('#userName').text(' @' + tweet.user);
+        $('#tweetMessage').text(tweet.message);*/
+        $('#btn').click(function() {
+          location.reload(streams.home);
+        })
+
 
       });
 
     </script>
+
   </body>
 </html>
