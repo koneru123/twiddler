@@ -37,13 +37,14 @@
             while(index >= 0){
             var tweet = streamsHomeArr[index];
             var time = timestampFormat(tweet.created_at);
-            var tweetHtml = $(`<li><span>@</span><a>${tweet.user}</a><div class="time">${time}</div> <div class="message">${tweet.message}</div></li>`);
+            var tweetHtml = $(`<li><div class="image"><img id="img" src="https://avatars.dicebear.com/v2/avataaars/${tweet.user}.svg"></div><span>@</span><a>${tweet.user}</a><div class="time">${time}</div> <div class="message">${tweet.message}</div></li>`);
             if(isUserTweets) {
               //userTweetsList.empty();
               tweetHtml.appendTo(userTweetsList);
             } else {
               tweetHtml.appendTo(tweetsList);
             }
+            // document.getElementById('img').src = 'https://avatars.dicebear.com/v2/avataaars/' + index + '.svg';
             index -= 1;
           }
         }
