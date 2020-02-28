@@ -48,3 +48,17 @@ li .time {
   margin-top: 4px;
   font-size: 15px;
 }
+
+.backButton {
+  padding: 20px;
+  border-radius: 15px;
+  background-color: green;
+  font-weight: bold;
+  color: white;
+  font-size: 15px;
+}
+
+.back {
+  position: sticky;
+  bottom:0;
+}

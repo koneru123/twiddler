@@ -67,11 +67,13 @@
               loadTweets(userTweets, true);
               $('#tweets').hide(); // all tweets
               $('#userTweets').show(); // just the user tweets
-              var backBtnHtml = $(`<button id="backBtn">Back Btn</button>`);
+              $('#btn').hide(); // this hides the refresh button
+              var backBtnHtml = $(`<div class="back"><button id="backBtn" class="backButton">Back Btn</button></div>`);
               backBtnHtml.appendTo(userTweetsList);
               $('#backBtn').click(function () {
                 $('#userTweets').hide();
                 $('#tweets').show();
+                $('#btn').show();
               });
             }
           }
