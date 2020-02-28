@@ -4,9 +4,10 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <link rel="stylesheet" type="text/css"  href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Bitter|Odibee+Sans|Ubuntu&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div id="btn"><button type="button">Refresh Tweets</button></div>
+    <div id="btn" class="refreshBtn"><button class="refBtn" type="button">Refresh Tweets</button></div>
     <ul id="tweets">
     </ul>
     <ul id="userTweets">
@@ -36,7 +37,7 @@
             while(index >= 0){
             var tweet = streamsHomeArr[index];
             var time = timestampFormat(tweet.created_at);
-            var tweetHtml = $(`<li>@<a>${tweet.user}</a>: ${tweet.message}: ${time}</li>`);
+            var tweetHtml = $(`<li><span>@</span><a>${tweet.user}</a><div class="time">${time}</div> <div class="message">${tweet.message}</div></li>`);
             if(isUserTweets) {
               //userTweetsList.empty();
               tweetHtml.appendTo(userTweetsList);
@@ -64,8 +65,8 @@
             if (userTweets.length > 0) {
               //console.log(userTweets);
               loadTweets(userTweets, true);
-              $('#tweets').hide();
-              $('#userTweets').show();
+              $('#tweets').hide(); // all tweets
+              $('#userTweets').show(); // just the user tweets
               var backBtnHtml = $(`<button id="backBtn">Back Btn</button>`);
               backBtnHtml.appendTo(userTweetsList);
               $('#backBtn').click(function () {
@@ -76,8 +77,6 @@
           }
         });
       });
-
     </script>
-
   </body>
 </html>

@@ -1,0 +1,50 @@
+body ul{
+  list-style: none;
+}
+
+.refreshBtn {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+
+.refBtn {
+  padding: 20px;
+  border-radius: 15px;
+  background-color: green;
+  font-weight: bold;
+  color: white;
+  font-size: 15px;
+}
+
+li {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid green;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+li a {
+  font-weight: bold;
+  margin-right: 10px;
+  font-family: 'Odibee Sans';
+  font-size: 22px;
+}
+
+li .message {
+  flex-basis: 100%;
+  margin-top: 5px;
+  font-family: 'Bitter';
+}
+
+li span {
+  font-family: 'Odibee Sans';
+  font-size: 18px;
+}
+
+li .time {
+  font-style: italic;
+  margin-top: 4px;
+  font-size: 15px;
+}
