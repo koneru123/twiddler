@@ -9,11 +9,14 @@
     <div id="btn"><button type="button">Refresh Tweets</button></div>
     <ul id="tweets">
     </ul>
+    <ul id="userTweets">
+    </ul>
     <script>
       $(document).ready(function(){
         var $body = $('body');
-        const tweetsList = $("#tweets");
-        const timestampFormat = function(date) {
+        var tweetsList = $("#tweets");
+        var userTweetsList = $("#userTweets");
+        var timestampFormat = function(date) {
             var strArray=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             var d = date.getDate();
             var m = strArray[date.getMonth()];
@@ -24,20 +27,54 @@
             return '' + (d <= 9 ? '0' + d : d) + '-' + m +` ${h}:${min}`;
         }
 
-        function loadTweets() {
-            var index = streams.home.length - 1;
+        function loadTweets(streamsHomeArr, isUserTweets = false) {
+            var index = streamsHomeArr.length - 1;
+            if(isUserTweets) {
+              //debugger;
+              userTweetsList.empty();
+            }
             while(index >= 0){
-            var tweet = streams.home[index];
+            var tweet = streamsHomeArr[index];
             var time = timestampFormat(tweet.created_at);
-            var $tweetHtml = $(`<li>@${tweet.user}: ${tweet.message}: ${time}</li>`);
-            $tweetHtml.appendTo(tweetsList);
+            var tweetHtml = $(`<li>@<a>${tweet.user}</a>: ${tweet.message}: ${time}</li>`);
+            if(isUserTweets) {
+              //userTweetsList.empty();
+              tweetHtml.appendTo(userTweetsList);
+            } else {
+              tweetHtml.appendTo(tweetsList);
+            }
             index -= 1;
           }
         }
-        loadTweets();
+        //var streamsHomeArr = streams.home;
+        loadTweets(streams.home);
         $('#btn').click(function() {
-          loadTweets();
-        })
+          loadTweets(streams.home);
+        });
+        const getTweetsForUser = function(userName = '') {
+          return streams.users[userName] || [];
+        };
+
+        tweetsList.click(function(e){
+          //debugger;
+          //console.log(e.target.text);
+          const userName = e.target.text;
+          if (userName !== '') {
+            const userTweets = getTweetsForUser(e.target.text);
+            if (userTweets.length > 0) {
+              //console.log(userTweets);
+              loadTweets(userTweets, true);
+              $('#tweets').hide();
+              $('#userTweets').show();
+              var backBtnHtml = $(`<button id="backBtn">Back Btn</button>`);
+              backBtnHtml.appendTo(userTweetsList);
+              $('#backBtn').click(function () {
+                $('#userTweets').hide();
+                $('#tweets').show();
+              });
+            }
+          }
+        });
       });
 
     </script>
