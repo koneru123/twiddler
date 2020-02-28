@@ -6,38 +6,38 @@
     <link rel="stylesheet" type="text/css"  href="index.css">
   </head>
   <body>
+    <div id="btn"><button type="button">Refresh Tweets</button></div>
+    <ul id="tweets">
+    </ul>
     <script>
       $(document).ready(function(){
         var $body = $('body');
-        $('body').html('<div id="btn"><button type="button">Refresh Tweets</button></div>');
-        var index = streams.home.length - 1;
-        var time = new Date();
-        var hours = time.getHours();
-        var mins = time.getMinutes();
-        var secs = time.getSeconds();
-        var timeStamp = hours + ':' + mins + ':' + secs;
-
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text(timeStamp + ' @' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-
+        const tweetsList = $("#tweets");
+        const timestampFormat = function(date) {
+            var strArray=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var d = date.getDate();
+            var m = strArray[date.getMonth()];
+            var y = date.getFullYear();
+            var h = date.getHours();
+            var min = date.getMinutes();
+            //return '' + (d <= 9 ? '0' + d : d) + '-' + m + '-' + y;
+            return '' + (d <= 9 ? '0' + d : d) + '-' + m +` ${h}:${min}`;
         }
 
-        /*$('#btn').append($( '<div id="container" class="containerDev"></div>' ));
-        $('#container').append($( '<div id="timeStamp"></div>' ));
-        $('#container').append($( '<div id="userName"></div>' ));
-        $('#container').append($( '<div id="tweetMessage"></div>' ));
-        $('#timeStamp').text(timeStamp);
-        $('#userName').text(' @' + tweet.user);
-        $('#tweetMessage').text(tweet.message);*/
+        function loadTweets() {
+            var index = streams.home.length - 1;
+            while(index >= 0){
+            var tweet = streams.home[index];
+            var time = timestampFormat(tweet.created_at);
+            var $tweetHtml = $(`<li>@${tweet.user}: ${tweet.message}: ${time}</li>`);
+            $tweetHtml.appendTo(tweetsList);
+            index -= 1;
+          }
+        }
+        loadTweets();
         $('#btn').click(function() {
-          location.reload(streams.home);
+          loadTweets();
         })
-
-
       });
 
     </script>
