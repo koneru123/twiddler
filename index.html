@@ -24,14 +24,12 @@
             var y = date.getFullYear();
             var h = date.getHours();
             var min = date.getMinutes();
-            //return '' + (d <= 9 ? '0' + d : d) + '-' + m + '-' + y;
             return '' + (d <= 9 ? '0' + d : d) + '-' + m +` ${h}:${min}`;
         }
 
         function loadTweets(streamsHomeArr, isUserTweets = false) {
             var index = streamsHomeArr.length - 1;
             if(isUserTweets) {
-              //debugger;
               userTweetsList.empty();
             }
             while(index >= 0){
@@ -39,16 +37,13 @@
             var time = timestampFormat(tweet.created_at);
             var tweetHtml = $(`<li><div class="image"><img id="img" src="https://avatars.dicebear.com/v2/avataaars/${tweet.user}.svg"></div><span>@</span><a>${tweet.user}</a><div class="time">${time}</div> <div class="message">${tweet.message}</div></li>`);
             if(isUserTweets) {
-              //userTweetsList.empty();
               tweetHtml.appendTo(userTweetsList);
             } else {
               tweetHtml.appendTo(tweetsList);
             }
-            // document.getElementById('img').src = 'https://avatars.dicebear.com/v2/avataaars/' + index + '.svg';
             index -= 1;
           }
         }
-        //var streamsHomeArr = streams.home;
         loadTweets(streams.home);
         $('#btn').click(function() {
           loadTweets(streams.home);
@@ -58,13 +53,10 @@
         };
 
         tweetsList.click(function(e){
-          //debugger;
-          //console.log(e.target.text);
           const userName = e.target.text;
           if (userName !== '') {
             const userTweets = getTweetsForUser(e.target.text);
             if (userTweets.length > 0) {
-              //console.log(userTweets);
               loadTweets(userTweets, true);
               $('#tweets').hide(); // all tweets
               $('#userTweets').show(); // just the user tweets
